@@ -1,0 +1,139 @@
+<style>
+
+.login{
+	*padding: 10px;
+	z-index: 2;
+}
+
+.login input[type=text]{
+	width: 99%;
+	height: 30px;
+	background: transparent;
+	border: 1px solid rgba(255,255,255,0.6);
+	border-radius: 1px;
+	color: #777777;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+}
+
+.login input[type=password]{
+	width: 99%;
+	height: 30px;
+	background: transparent;
+	border: 1px solid rgba(255,255,255,0.6);
+	border-radius: 1px;
+	color: #777777;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+	margin-top: 10px;
+}
+
+.login input[type=button]{
+	width: 100%;
+	height: 35px;
+	background: rgba(82, 168, 236, 0.8);
+    border: 1px solid rgba(82, 168, 236, 0.0);
+	cursor: pointer;
+	border-radius: 4px;
+	color: white;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	/*margin-top: 10px;*/
+}
+
+.login input[type=button]:hover{
+	opacity: 0.8;
+}
+
+.login input[type=button]:active{
+	opacity: 0.6;
+}
+
+.login input[type=text]:focus{
+	outline: none;
+	border: 1px solid rgba(255,255,255,0.9);
+}
+
+.login input[type=password]:focus{
+	outline: none;
+	border: 1px solid rgba(255,255,255,0.9);
+}
+
+.login input[type=button]:focus{
+	outline: none;
+}
+
+input::-webkit-input-placeholder{
+   color: #d4d4d4;
+}
+
+input::-moz-input-placeholder{
+   color: #d4d4d4;
+}
+
+input:-moz-input-placeholder{
+   color: #d4d4d4;
+}
+
+input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: #d4d4d4;
+}
+
+.domain {
+	float:left;
+	line-height: 35px;
+	color: #777777;
+	*font-weight: bold;
+	font-size: 16px;
+}
+
+.login-box {
+	border: 0px solid #d4d4d4;
+	width: 50%;
+	padding: 30px;
+	border-radius: 6px;
+	box-shadow: 1px 1px 20px 2px #d4d4d4;
+	min-height:40px; /*min height of DIV should be set to at least 2x the width of the arrow*/
+	background: white;
+	color:white;
+	position:relative;
+	word-wrap:break-word;
+	margin-bottom:2em;
+	*margin-left: 9em;
+}
+
+.login-box:after {
+	content:'';
+	display:white;
+	position:absolute;
+	top:-20px; /*should be set to -border-width x 2 */
+	left:30px;
+	width:0;
+	height:0;
+	border-color: transparent transparent white transparent; /*border color should be same as div div background color*/
+	border-style: solid;
+	border-width: 10px;
+}
+
+.dropdown-box {
+	display: inline-block;
+	margin-top: 5px;
+	width: 100%;
+}
+</style>
+
+<h2>Login | Signup</h2>
+<div class="login" align="left">
+	<div class="login-box">
+		<input type="button" value="Authenticate with WEBID">
+	</div>
+</div>
+
+<p>You don't have a WEBID account? <a href="#/signup">Click here to signup</a></p>
+
