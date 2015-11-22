@@ -126,22 +126,29 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 	margin-top: 5px;
 	width: 100%;
 }
+
+.message {
+    float: right;
+    color: red;
+    line-height: 35px;
+}
 </style>
 
 <h2>Login | Signup</h2>
-<div class="login" align="left">
+<div class="login" align="left" ng-controller="SignupController">
 	<div class="login-box">
-		<input type="text" placeholder="Account name" name="user"><br>
-		<input type="text" placeholder="Full name" name="fullname"><br>
-		<input type="text" placeholder="Email" name="email"><br>
-		<input type="text" placeholder="Picture URL" name="pictureURL"><br>
+		<input type="text" placeholder="Account name" name="user" ng-model="account.user" ng-focus="isFocused" ng-blur="isFocused = false"><br>
+		<input type="text" placeholder="Full name" name="fullname" ng-model="account.fullname"><br>
+		<input type="text" placeholder="Email" name="email" ng-model="account.email"><br>
+		<input type="text" placeholder="Picture URL" name="pictureURL" ng-model="account.pictureURL"><br>
 		<div class="dropdown-box">
 			<p class="domain">Domain:</p>
 			<select name="server">
-			  <option value="meccano.io" selected="selected">meccano.io</option>
+			  <option value="meccano.io" selected="selected" ng-model="account.domain">meccano.io</option>
 			</select>
+			<p class="message" ng-show="error"><i class="fa fa-exclamation-triangle"></i>&nbsp;Account name already taken</p>
 		</div><br>
-		<input type="button" value="Submit">
+		<input type="button" value="Submit" ng-click="focus(); test(account)">
 	</div>
 </div>
 
