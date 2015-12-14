@@ -45,25 +45,57 @@ app.controller('SignupController', function ($scope, $http, $location) {
     $scope.header = "Signup";
     $scope.isFocused = true;
     $scope.error = false;
-    $scope.show = true;
- 
-    $scope.test = function (account) {
-    	$scope.error = true;
-  	  	$scope.account.user= "";
-  	  	$scope.isFocused = true;
-  	  	//$location.path( "/login" );
+    $scope.submitForm = false;
+    
+    $scope.domains = ["meccano.io"];
+    
+    $scope.account = {
+    		domain: $scope.domains[0]
     };
     
-    // checks if the account name exists
-    $scope.check = function (account) {
-    	var uri = "";
+    // Check if a username exists
+    $scope.check = function () {
+    	var username = document.getElementById("username").value;
+        var uri = "https://" + username + ".databox.me";
+    	$http({
+          method: 'HEAD',
+          url: uri,
+          withCredentials: true
+        }).
+        success(function(data, status, headers) {
+        	//username exists, warn user to create a different one
+        	$scope.error = true;
+      	  	$scope.username= "";
+      	  	$scope.isFocused = true;     
+        }).
+        error(function(data, status) {
+          if (status == 401) {
+        	  console.log('Forbidden', 'Authentication required to create a user for: '+ username);
+          } else if (status == 403) {
+        	  console.log('Forbidden', 'You are not allowed to access storage for: '+ username);
+          } else if (status == 404) {
+        	  //username not existing, enable form submitting
+        	  $scope.submitForm = true;
+          } else {
+        	  console.log('Failed - HTTP '+status, data, 500);
+          }
+        });
+    };
+    
+    // Creates the account
+    $scope.create = function () {
+  	  	//$scope.account.spkac = document.getElementById("spkac");
+  	  	document.getElementById("submit").value = "Creating...";
+    	var uri = "https://" + document.getElementById("username").value + ".databox.me/,system/newCert";
+    	
         $http({
           method: 'POST', 
           url: uri,
-          data: account,
+          //data: $.param({account : $scope.account}),
+          data: $("#signupForm").serialize(),
           headers: {
-        	'Content-Type': 'application/json',
-        	'Accept': 'text/html'
+        	'Content-Type': 'application/x-www-form-urlencoded',
+        	'Accept': 'application/x-x509-user-cert'
           },
           withCredentials: true
         }).
@@ -71,23 +103,27 @@ app.controller('SignupController', function ($scope, $http, $location) {
           if (status == 200 || status == 201) {
         	  //Account created
         	  $scope.result = data;
-        	  $location.path(""); 
+        	  //$location.path(""); 
           }
         }).
         error(function(data, status) {
+          document.getElementById("submit").value = "Submit";
           if (status == 401) {
             console.log('Forbidden', 'Authentication required to create a new account.');
           } else if (status == 403) {
         	  console.log('Forbidden', 'You are not allowed to create a new account with this name.');
-        	  //If account name already taken
-        	  $scope.error = true;
-        	  $scope.account.user= "";
-        	  $scope.isFocused = true;
-        	  //$scope.$digest();
           } else {
-        	  console.log('Failed '+ status + data);
+        	  console.log('Failed - HTTP '+status, data, 500);
           }
         });
+    };
+    
+    // Complete form before submit
+    $scope.completeForm = function () {
+  	  	document.getElementById("btnSubmit").value = "Creating...";
+  	  	$scope.actionUrl = "https://" + document.getElementById("username").value + ".databox.me/,system/newCert";
+  	  	//$scope.actionUrl = $sce.trustAsResourceUrl($scope.actionUrl);
+  	  	document.getElementById("signupForm").submit();     
     };
     
 });
