@@ -45,7 +45,9 @@ app.controller('SignupController', function ($scope, $http, $location) {
     $scope.header = "Signup";
     $scope.isFocused = true;
     $scope.error = false;
+    $scope.comfirm = false;
     $scope.submitForm = false;
+    $scope.showLoading = false;
     
     $scope.domains = ["meccano.io"];
     
@@ -55,8 +57,9 @@ app.controller('SignupController', function ($scope, $http, $location) {
     
     // Check if a username exists
     $scope.check = function () {
-    	var username = document.getElementById("username").value;
-        var uri = "https://" + username + ".databox.me";
+    	document.getElementById("btnSubmit").value = "Checking...";
+    	$scope.showLoading = true;
+    	var uri = "https://" + $scope.account.username + "." + $scope.account.domain;
     	$http({
           method: 'HEAD',
           url: uri,
@@ -66,7 +69,9 @@ app.controller('SignupController', function ($scope, $http, $location) {
         	//username exists, warn user to create a different one
         	$scope.error = true;
       	  	$scope.username= "";
-      	  	$scope.isFocused = true;     
+      	  	$scope.isFocused = true;
+      	  	$scope.showLoading = false;
+      	  	document.getElementById("btnSubmit").value = "Check if account name exists";
         }).
         error(function(data, status) {
           if (status == 401) {
@@ -76,16 +81,29 @@ app.controller('SignupController', function ($scope, $http, $location) {
           } else if (status == 404) {
         	  //username not existing, enable form submitting
         	  $scope.submitForm = true;
+        	  $scope.showLoading = false;
+        	  $scope.comfirm = true;
+        	  //document.getElementById("btnSubmit").value = "Submit";
           } else {
-        	  console.log('Failed - HTTP '+status, data, 500);
+        	  console.log('Failed - HTTP '+ status, data);
           }
         });
+    };
+        
+    // Completes form and submit
+    $scope.submit = function () {
+  	  	document.getElementById("btnSubmit").value = "Creating...";
+  	  	$scope.comfirm = false;
+  	  	$scope.showLoading = true;
+  	  	$scope.actionUrl = "https://" + $scope.account.username + "." + $scope.account.domain + "/,system/newCert";
+  	  	//$scope.actionUrl = $sce.trustAsResourceUrl($scope.actionUrl);
+  	  	document.getElementById("signupForm").submit();     
     };
     
     // Creates the account
     $scope.create = function () {
   	  	//$scope.account.spkac = document.getElementById("spkac");
-  	  	document.getElementById("submit").value = "Creating...";
+  	  	document.getElementById("submit").value = "Creating account...";
     	var uri = "https://" + document.getElementById("username").value + ".databox.me/,system/newCert";
     	
         $http({
@@ -117,15 +135,7 @@ app.controller('SignupController', function ($scope, $http, $location) {
           }
         });
     };
-    
-    // Complete form before submit
-    $scope.completeForm = function () {
-  	  	document.getElementById("btnSubmit").value = "Creating...";
-  	  	$scope.actionUrl = "https://" + document.getElementById("username").value + ".databox.me/,system/newCert";
-  	  	//$scope.actionUrl = $sce.trustAsResourceUrl($scope.actionUrl);
-  	  	document.getElementById("signupForm").submit();     
-    };
-    
+        
 });
 
 // post controller
