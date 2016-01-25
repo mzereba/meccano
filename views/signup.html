@@ -141,7 +141,8 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 
 .dropdown-box {
 	display: inline-block;
-	margin-top: 5px;
+	/*margin-top: 5px;*/
+	margin-bottom: 5px;
 	width: 100%;
 }
 
@@ -171,8 +172,8 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 			<input type="text" placeholder="Account name" name="username" ng-model="account.username" ng-focus="isFocused" ng-blur="isFocused = false"><br>
 			<input type="text" placeholder="Full name" name="name" ng-model="account.name"><br>
 			<input type="text" placeholder="Email" name="email" ng-model="email"><br>
-			<input type="text" placeholder="Picture URL" name="pictureURL" ng-model="account.pictureURL"><br>
-			<keygen id="spkac" name="spkac" challenge="randomchars" keyparams="2048" keytype="rsa" form="signupForm" hidden>
+			<input type="text" placeholder="Picture URL" name="pictureURL" ng-model="account.pictureURL">
+			<keygen id="spkac" name="spkac" challenge="randomchars" keyparams="2048" keytype="rsa" form="signupForm" style="visibility:hidden; margin-bottom: -20px;">
 			<div class="dropdown-box">
 				<p class="domain">Domain:</p>
 				<select name="domain" ng-model="account.domain" ng-options="domain for domain in domains"></select>

@@ -54,7 +54,7 @@ app.controller('SignupController', function ($scope, $http, $location) {
     $scope.account = {
     		domain: $scope.domains[0]
     };
-    
+        
     // Check if a username exists
     $scope.check = function () {
     	document.getElementById("btnSubmit").value = "Checking...";
@@ -67,11 +67,12 @@ app.controller('SignupController', function ($scope, $http, $location) {
         }).
         success(function(data, status, headers) {
         	//username exists, warn user to create a different one
+      	  	$scope.showLoading = false;
         	$scope.error = true;
       	  	$scope.username= "";
       	  	$scope.isFocused = true;
-      	  	$scope.showLoading = false;
       	  	document.getElementById("btnSubmit").value = "Check if account name exists";
+      	  	$scope.$digest();
         }).
         error(function(data, status) {
           if (status == 401) {
@@ -80,16 +81,17 @@ app.controller('SignupController', function ($scope, $http, $location) {
         	  console.log('Forbidden', 'You are not allowed to access storage for: '+ username);
           } else if (status == 404) {
         	  //username not existing, enable form submitting
-        	  $scope.submitForm = true;
         	  $scope.showLoading = false;
+        	  $scope.submitForm = true;
         	  $scope.comfirm = true;
         	  //document.getElementById("btnSubmit").value = "Submit";
+        	  $scope.$digest();
           } else {
         	  console.log('Failed - HTTP '+ status, data);
           }
         });
     };
-        
+     
     // Completes form and submit
     $scope.submit = function () {
   	  	document.getElementById("btnSubmit").value = "Creating...";
