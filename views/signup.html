@@ -146,7 +146,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 	width: 100%;
 }
 
-.message {
+.error-message {
     float: right;
     color: red;
     line-height: 35px;
@@ -177,7 +177,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 			<div class="dropdown-box">
 				<p class="domain">Domain:</p>
 				<select name="domain" ng-model="account.domain" ng-options="domain for domain in domains"></select>
-				<p class="message" ng-show="error"><i class="fa fa-exclamation-triangle"></i>&nbsp;Account name already taken</p>
+				<p class="error-message" ng-show="error"><i class="fa fa-exclamation-triangle"></i>&nbsp;Account name already taken</p>
 				<p class="comfirmation" ng-show="comfirm"><i class="fa fa-check"></i>&nbsp;Account name available</p>
 				<p class="loading" ng-show="showLoading"><i class="fa fa-spinner fa-spin fa-lg"></i></p>
 			</div><br>
