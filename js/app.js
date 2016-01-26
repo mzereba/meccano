@@ -57,7 +57,8 @@ app.controller('SignupController', function ($scope, $http, $location) {
         
     // Check if a username exists
     $scope.check = function () {
-    	document.getElementById("btnSubmit").value = "Checking...";
+    	$scope.error = false;
+    	document.getElementById("btnCheck").value = "Checking...";
     	$scope.showLoading = true;
     	var uri = "https://" + $scope.account.username + "." + $scope.account.domain;
     	$http({
@@ -71,8 +72,8 @@ app.controller('SignupController', function ($scope, $http, $location) {
         	$scope.error = true;
       	  	$scope.username= "";
       	  	$scope.isFocused = true;
-      	  	document.getElementById("btnSubmit").value = "Check if account name exists";
-      	  	$scope.$digest();
+      	  	document.getElementById("btnCheck").value = "Check if account name exists";
+      	  	//$scope.$digest();
         }).
         error(function(data, status) {
           if (status == 401) {
@@ -85,7 +86,7 @@ app.controller('SignupController', function ($scope, $http, $location) {
         	  $scope.submitForm = true;
         	  $scope.comfirm = true;
         	  //document.getElementById("btnSubmit").value = "Submit";
-        	  $scope.$digest();
+        	  //$scope.$digest();
           } else {
         	  console.log('Failed - HTTP '+ status, data);
           }
@@ -99,44 +100,34 @@ app.controller('SignupController', function ($scope, $http, $location) {
   	  	$scope.showLoading = true;
   	  	$scope.actionUrl = "https://" + $scope.account.username + "." + $scope.account.domain + "/,system/newCert";
   	  	//$scope.actionUrl = $sce.trustAsResourceUrl($scope.actionUrl);
-  	  	document.getElementById("signupForm").submit();     
+  	  	document.getElementById("signupForm").submit();
+  	  	redirect();
+  	  	//$location.path("https://" + $scope.account.username + "." +  $scope.account.domain);
     };
     
-    // Creates the account
-    $scope.create = function () {
-  	  	//$scope.account.spkac = document.getElementById("spkac");
-  	  	document.getElementById("submit").value = "Creating account...";
-    	var uri = "https://" + document.getElementById("username").value + ".databox.me/,system/newCert";
-    	
-        $http({
-          method: 'POST', 
-          url: uri,
-          //data: $.param({account : $scope.account}),
-          data: $("#signupForm").serialize(),
-          headers: {
-        	'Content-Type': 'application/x-www-form-urlencoded',
-        	'Accept': 'application/x-x509-user-cert'
-          },
-          withCredentials: true
-        }).
-        success(function(data, status, headers) {
-          if (status == 200 || status == 201) {
-        	  //Account created
-        	  $scope.result = data;
-        	  //$location.path(""); 
-          }
-        }).
-        error(function(data, status) {
-          document.getElementById("submit").value = "Submit";
-          if (status == 401) {
-            console.log('Forbidden', 'Authentication required to create a new account.');
-          } else if (status == 403) {
-        	  console.log('Forbidden', 'You are not allowed to create a new account with this name.');
-          } else {
-        	  console.log('Failed - HTTP '+status, data, 500);
-          }
-        });
-    };
+    $scope.test = function () {
+    	alert("Redirecting...");
+    }
+    
+    function redirect() {
+		var delay=5000; //5 seconds
+		setTimeout(function(){	 
+			var url = "https://" + document.getElementById("username").value + "." + document.getElementById("domain").options[0].text;
+		     
+		     // IE8 and lower fix
+		     if (navigator.userAgent.match(/MSIE\s(?!9.0)/))
+		     {
+		         var referLink = document.createElement("a");
+		         referLink.href = url;
+		         document.body.appendChild(referLink);
+		         referLink.click();
+		     }
+		     
+		     // All other browsers
+		     else { window.location.assign(url); }
+	
+	     }, delay);
+	}
         
 });
 

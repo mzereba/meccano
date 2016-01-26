@@ -169,19 +169,19 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 <div class="login" align="left" ng-controller="SignupController">
 	<div class="login-box">
 		<form name="signupForm" id="signupForm" method="POST" action="{{actionUrl}}">
-			<input type="text" placeholder="Account name" name="username" ng-model="account.username" ng-focus="isFocused" ng-blur="isFocused = false"><br>
+			<input type="text" placeholder="Account name" name="username" id="username" ng-model="account.username" ng-focus="isFocused" ng-blur="isFocused = false"><br>
 			<input type="text" placeholder="Full name" name="name" ng-model="account.name"><br>
 			<input type="text" placeholder="Email" name="email" ng-model="email"><br>
 			<input type="text" placeholder="Picture URL" name="pictureURL" ng-model="account.pictureURL">
 			<keygen id="spkac" name="spkac" challenge="randomchars" keyparams="2048" keytype="rsa" form="signupForm" style="visibility:hidden; margin-bottom: -20px;">
 			<div class="dropdown-box">
 				<p class="domain">Domain:</p>
-				<select name="domain" ng-model="account.domain" ng-options="domain for domain in domains"></select>
+				<select name="domain" id="domain" ng-model="account.domain" ng-options="domain for domain in domains"></select>
 				<p class="error-message" ng-show="error"><i class="fa fa-exclamation-triangle"></i>&nbsp;Account name already taken</p>
 				<p class="comfirmation" ng-show="comfirm"><i class="fa fa-check"></i>&nbsp;Account name available</p>
 				<p class="loading" ng-show="showLoading"><i class="fa fa-spinner fa-spin fa-lg"></i></p>
 			</div><br>
-			<input type="button" id="btnSubmit" value="Check if account name exists" ng-hide="submitForm" ng-click="check()">
+			<input type="button" id="btnCheck" value="Check if account name exists" ng-hide="submitForm" ng-click="check()">
 			<input type="submit" id="btnSubmit" value="Submit" ng-show="submitForm" ng-click="submit()">
 		</form>
 	</div>
