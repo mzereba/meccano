@@ -54,12 +54,29 @@ app.controller('SignupController', function ($scope, $http, $location) {
     $scope.account = {
     		domain: $scope.domains[0]
     };
+    
+    // Checks if fields are filled in the correct format
+    $scope.verify = function () {
+    	if(!$scope.account.username)
+    		alert("Please enter a value for account name");
+    	else 
+    		if(!$scope.account.name)
+    			alert("Please enter a value for full name");
+		else 
+    		if(!$scope.account.email)
+    			alert("Please enter a value for email");
+		else 
+    		if($scope.account.email.indexOf('@') === -1 || $scope.account.email.indexOf('.') === -1)
+    			alert("Please enter a valid email");
+    	else
+    		$scope.check();
+    };
         
-    // Check if a username exists
+    // Checks if a username exists
     $scope.check = function () {
     	$scope.error = false;
-    	document.getElementById("btnCheck").value = "Checking...";
     	$scope.showLoading = true;
+    	document.getElementById("btnCheck").value = "Checking...";
     	var uri = "https://" + $scope.account.username + "." + $scope.account.domain;
     	$http({
           method: 'HEAD',
@@ -72,7 +89,7 @@ app.controller('SignupController', function ($scope, $http, $location) {
         	$scope.error = true;
       	  	$scope.username= "";
       	  	$scope.isFocused = true;
-      	  	document.getElementById("btnCheck").value = "Check if account name exists";
+      	  	document.getElementById("btnCheck").value = "Check account name availability";
       	  	//$scope.$digest();
         }).
         error(function(data, status) {
@@ -95,9 +112,9 @@ app.controller('SignupController', function ($scope, $http, $location) {
      
     // Completes form and submit
     $scope.submit = function () {
-  	  	document.getElementById("btnSubmit").value = "Creating...";
   	  	$scope.comfirm = false;
   	  	$scope.showLoading = true;
+  	  	document.getElementById("btnSubmit").value = "Creating...";
   	  	$scope.actionUrl = "https://" + $scope.account.username + "." + $scope.account.domain + "/,system/newCert";
   	  	//$scope.actionUrl = $sce.trustAsResourceUrl($scope.actionUrl);
   	  	document.getElementById("signupForm").submit();
@@ -105,10 +122,7 @@ app.controller('SignupController', function ($scope, $http, $location) {
   	  	//$location.path("https://" + $scope.account.username + "." +  $scope.account.domain);
     };
     
-    $scope.test = function () {
-    	alert("Redirecting...");
-    }
-    
+    // Redirects URL after form submit
     function redirect() {
 		var delay=5000; //5 seconds
 		setTimeout(function(){	 
@@ -127,8 +141,7 @@ app.controller('SignupController', function ($scope, $http, $location) {
 		     else { window.location.assign(url); }
 	
 	     }, delay);
-	}
-        
+	} 
 });
 
 // post controller

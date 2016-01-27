@@ -169,9 +169,9 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 <div class="login" align="left" ng-controller="SignupController">
 	<div class="login-box">
 		<form name="signupForm" id="signupForm" method="POST" action="{{actionUrl}}">
-			<input type="text" placeholder="Account name" name="username" id="username" ng-model="account.username" ng-focus="isFocused" ng-blur="isFocused = false"><br>
-			<input type="text" placeholder="Full name" name="name" ng-model="account.name"><br>
-			<input type="text" placeholder="Email" name="email" ng-model="email"><br>
+			<input type="text" placeholder="Account name*" name="username" id="username" ng-model="account.username" ng-focus="isFocused" ng-blur="isFocused = false"><br>
+			<input type="text" placeholder="Full name*" name="name" ng-model="account.name"><br>
+			<input type="text" placeholder="Email*" name="email" ng-model="account.email"><br>
 			<input type="text" placeholder="Picture URL" name="pictureURL" ng-model="account.pictureURL">
 			<keygen id="spkac" name="spkac" challenge="randomchars" keyparams="2048" keytype="rsa" form="signupForm" style="visibility:hidden; margin-bottom: -20px;">
 			<div class="dropdown-box">
@@ -181,7 +181,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10-11 */
 				<p class="comfirmation" ng-show="comfirm"><i class="fa fa-check"></i>&nbsp;Account name available</p>
 				<p class="loading" ng-show="showLoading"><i class="fa fa-spinner fa-spin fa-lg"></i></p>
 			</div><br>
-			<input type="button" id="btnCheck" value="Check if account name exists" ng-hide="submitForm" ng-click="check()">
+			<input type="button" id="btnCheck" value="Check account name availability" ng-hide="submitForm" ng-click="verify()">
 			<input type="submit" id="btnSubmit" value="Submit" ng-show="submitForm" ng-click="submit()">
 		</form>
 	</div>
