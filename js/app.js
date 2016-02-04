@@ -30,9 +30,9 @@ app.controller('AboutController', function ($scope) {
     $scope.header = "About";
 });
 
-// store controller
-app.controller('StoreController', function ($scope) {
-    $scope.header = "Application Store";
+// applications controller
+app.controller('ApplicationsController', function ($scope) {
+    $scope.header = "Applications";
 });
 
 // login controller
@@ -196,10 +196,10 @@ app.config(function ($routeProvider) {
             controller: 'AboutController',
             templateUrl: 'views/about.html'
         })
-    .when('/store',
+    .when('/applications',
         {
-            controller: 'StoreController',
-            templateUrl: 'views/store.html'
+            controller: 'ApplicationsController',
+            templateUrl: 'views/applications.html'
         })
     .when('/posts',
         {
