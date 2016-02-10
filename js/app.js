@@ -126,19 +126,19 @@ app.controller('SignupController', function ($scope, $http, $location) {
     function redirect() {
 		var delay=5000; //5 seconds
 		setTimeout(function(){	 
-			var url = "https://" + document.getElementById("username").value + "." + document.getElementById("domain").options[0].text;
-		     
+			//var url = "https://" + document.getElementById("username").value + "." + document.getElementById("domain").options[0].text;
+			var url = "https://" + document.getElementById("domain").options[0].text + "/#/applications";
 		     // IE8 and lower fix
-		     if (navigator.userAgent.match(/MSIE\s(?!9.0)/))
-		     {
-		         var referLink = document.createElement("a");
-		         referLink.href = url;
-		         document.body.appendChild(referLink);
-		         referLink.click();
-		     }
-		     
-		     // All other browsers
-		     else { window.location.assign(url); }
+		    if (navigator.userAgent.match(/MSIE\s(?!9.0)/))
+		    {
+		        var referLink = document.createElement("a");
+		        referLink.href = url;
+		        document.body.appendChild(referLink);
+		        referLink.click();
+		    }
+		    
+		    // All other browsers
+		    else { window.location.assign(url); }
 	
 	     }, delay);
 	} 
